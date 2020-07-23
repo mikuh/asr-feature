@@ -32,5 +32,19 @@ int main(int argc, char const* argv[])
     riff_chunk rc = _read_riff_chunk(file);
     
     std::cout << rc.first << "," << rc.second << std::endl;
+
+
+
+    while(file.tellg() < rc.first){
+        char chunk_id[4];
+        file.read(chunk_id, 4);
+        if(chunk_id == nullptr)
+            throw std::runtime_error("Unexpected end of file.");
+        else if (sizeof(chunk_id) !=4)
+            throw std::runtime_error("Incomplete wav chunk.");
+        
+        std::cout << chunk_id << std::endl;
+        break;
+    }
     return 0;
 }
